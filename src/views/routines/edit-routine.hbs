@@ -1,0 +1,49 @@
+<div class="col-md-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3>Edit Routine</h3>
+        </div>
+        <div class="card-body">
+            <form action="/routines/edit/{{routine.id}}?_method=PUT"
+                method="post" id="myform">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="form-group">
+                    <input type="text" name="title" class="form-control" 
+                    value="{{routine.title}}" id="message">
+                </div>
+                <div class="form-group">
+                    <textarea name="description" class="form-control">{{routine.description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <div class="input-group date">
+                        <input type="text" name="date"
+                            class="form-control datepicker"
+                            placeholder="Select Date">
+                        <div class="input-group-append">
+                            <span class="input-group-text icon-calendar">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group time">
+                        <input type="text" name="time"
+                            class="form-control clockpicker"
+                            placeholder="Select Time in 24h Format">
+                        <div class="input-group-append">
+                            <span class="input-group-text icon-clock">
+                                <i class="fa-solid fa-clock"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
