@@ -11,6 +11,7 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 const formatDateHelper = require("./helpers/formatDate");
+require('dotenv').config();
 
 connectDB();
 const webpush = require("./webpush"); // Importamos el módulo webpush
