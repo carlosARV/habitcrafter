@@ -14,7 +14,6 @@ const formatDateHelper = require("./helpers/formatDate");
 require('dotenv').config();
 
 connectDB();
-const webpush = require("./webpush"); // Importamos el módulo webpush
 
 require("./config/passport");
 
