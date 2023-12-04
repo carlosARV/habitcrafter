@@ -16,12 +16,12 @@ routinesCtrl.createNewRoutine = async (req, res) => {
 }
 
 routinesCtrl.renderRoutines = async (req, res) => {
-    const routines = await Routine.find({user: req.user.id}).sort({createdAt: 'desc'});
+    const routines = await Routine.find({user: req.user.id}).sort({createdAt: 'desc'}).lean();
     res.render("routines/all-routines", { routines });
 }
 
 routinesCtrl.renderEditForm = async (req, res) => {
-    const routine = await Routine.findByIdAndUpdate(req.params.id);
+    const routine = await Routine.findById(req.params.id).lean();
     if (routine.user != req.user.id) {
         req.flash('error_msg', 'Not authorized'); 
         return res.redirect('/routines'); 
