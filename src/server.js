@@ -13,8 +13,6 @@ const passport = require("passport");
 const formatDateHelper = require("./helpers/formatDate");
 require('dotenv').config();
 
-connectDB();
-
 require("./config/passport");
 
 const app = express();
@@ -80,5 +78,7 @@ app.use(express.static(path.join(__dirname, "public")));
 server.listen(app.get("port"), () => {
   console.log(`Servidor corriendo en el puerto: `, process.env.PORT || 4000);
 });
+
+connectDB();
 
 module.exports = { app, server };
