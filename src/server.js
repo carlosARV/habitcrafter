@@ -1,6 +1,6 @@
 const express = require("express");
 require('dotenv').config();
-require("./database");
+const {connectDB} = require("./database");
 const http = require("http");
 const path = require("path");
 const morgan = require("morgan");
@@ -15,7 +15,7 @@ const formatDateHelper = require("./helpers/formatDate");
 
 // Llamado del módulo dotenv para la ejecución de variables de entorno
 require("dotenv").config();
-
+connectDB();
 const webpush = require("./webpush"); // Importamos el módulo webpush
 
 require("./config/passport");

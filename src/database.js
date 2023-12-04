@@ -1,15 +1,20 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
 
-const { NOTES_APP_MONGODB_HOST, NOTES_APP_MONGODB_DATABASE } = process.env;
+//const { NOTES_APP_MONGODB_HOST} = process.env;
 
-const MONGODB_URI = `mongodb://${NOTES_APP_MONGODB_HOST}/${NOTES_APP_MONGODB_DATABASE}`;
+//const MONGODB_URI = `${NOTES_APP_MONGODB_HOST}`;
 
-mongoose
-  .connect(MONGODB_URI, {
+const connectDB = async () => {
+  try {
+    mongoose.connect(process.env.NOTES_APP_MONGODB_HOST, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-  })
-  .then((db) => {
+    });
     console.log("Database is connected");
-  })
-  .catch((err) => console.log(err));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+module.exports = {connectDB}
