@@ -16,7 +16,7 @@ const {
 const { isAuthenticated } = require("../helpers/auth");
 
 // Manejar las solicitudes POST a '/subscription'
-router.post("/subscription", handleSubscription);
+router.post("/subscription", isAuthenticated, handleSubscription);
 
 // New note
 router.get("/notes/add", isAuthenticated, renderNoteForm);
