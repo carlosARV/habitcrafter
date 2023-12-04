@@ -22,7 +22,7 @@ router.get('/routines', isAuthenticated, renderRoutines);
 
 // Update notes
 router.get('/routines/edit/:id', isAuthenticated, renderEditForm);
-router.put('/routines/edit/:id', isAuthenticated, updateRoutine);
+router.put('/routines/edit-routine/:id', isAuthenticated, updateRoutine);
 
 // Delete notes
 router.delete('/routines/delete/:id', isAuthenticated, deleteRoutine);

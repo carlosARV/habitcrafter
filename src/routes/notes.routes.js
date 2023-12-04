@@ -13,7 +13,7 @@ const {
   handleSubscription
 } = require("../controllers/notes.controller");
 
-const { isAuthenticated } = require("../helpers/auth");
+const {isAuthenticated} = require('../helpers/auth');
 
 // Manejar las solicitudes POST a '/subscription'
 router.post("/subscription", isAuthenticated, handleSubscription);
@@ -27,7 +27,7 @@ router.get("/notes", isAuthenticated, renderNotes);
 
 // Update notes
 router.get("/notes/edit/:id", isAuthenticated, renderEditForm);
-router.put("/notes/edit/:id", isAuthenticated, updateNote);
+router.put("/notes/edit-note/:id", isAuthenticated, updateNote);
 
 // Delete notes
 router.delete("/notes/delete/:id", isAuthenticated, deleteNote);

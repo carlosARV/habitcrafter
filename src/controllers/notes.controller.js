@@ -58,19 +58,43 @@ notesCtrl.renderNotes = async (req, res) => {
 };
 
 notesCtrl.renderEditForm = async (req, res) => {
-  const note = await Note.findById(req.params.id).lean();
-  if (note.user != req.user.id) {
-    req.flash("error_msg", "Not authorized");
-    return res.redirect("/notes");
+  try {
+    const note = await Note.findById(req.params.id);
+    if (note.user != req.user.id) {
+      req.flash("error_msg", "Not authorized");
+      return res.redirect("/notes");
+    }
+    res.render("notes/edit-note", { note });
+  } catch (error) {
+    console.log(error);
   }
-  res.render("notes/edit-note", { note });
+  
 };
 
 notesCtrl.updateNote = async (req, res) => {
-  const { title, description } = req.body;
-  await Note.findByIdAndUpdate(req.params.id, { title, description });
-  req.flash("success_msg", "Note updated successfully");
-  res.redirect("/notes");
+  const { title, description } = req.body;  
+  try {
+    const note = await Note.findById(req.params.id);
+
+    // Verifica si el documento existe
+    if (!note) {
+      req.flash("error_msg", "Note not found");
+      return res.redirect("/notes");
+    }
+    // Verifica si el usuario tiene permiso para actualizar la nota
+    if (note.user.toString() !== req.user.id) {
+      req.flash("error_msg", "Not authorized");
+      return res.redirect("/notes");
+    }
+    // Actualiza la nota si el usuario tiene permiso y el documento existe
+    await Note.findByIdAndUpdate(req.params.id, { title, description });
+    req.flash("success_msg", "Note updated successfully");
+    res.redirect("/notes");
+  } catch (error) {
+    console.log(error);
+    req.flash("error_msg", "Something went wrong");
+    res.redirect("/notes");
+  }
 };
 
 notesCtrl.deleteNote = async (req, res) => {

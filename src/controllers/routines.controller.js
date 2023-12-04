@@ -21,7 +21,7 @@ routinesCtrl.renderRoutines = async (req, res) => {
 }
 
 routinesCtrl.renderEditForm = async (req, res) => {
-    const routine = await Routine.findById(req.params.id).lean();
+    const routine = await Routine.findById(req.params.id);
     if (routine.user != req.user.id) {
         req.flash('error_msg', 'Not authorized'); 
         return res.redirect('/routines'); 
@@ -29,11 +29,31 @@ routinesCtrl.renderEditForm = async (req, res) => {
     res.render('routines/edit-routine', { routine });
 }
 
-routinesCtrl.updateRoutine = async (req, res) => {
-    const { title, description, date, time } = req.body;
+routinesCtrl.updateRoutine = async (req, res) => {    
+    const { title, description, date, time } = req.body; 
+
+  try {
+    const note = await Routine.findById(req.params.id);
+
+    // Verifica si el documento existe
+    if (!note) {
+      req.flash("error_msg", "Note not found");
+      return res.redirect("/routines");
+    }
+    // Verifica si el usuario tiene permiso para actualizar la nota
+    if (note.user.toString() !== req.user.id) {
+      req.flash("error_msg", "Not authorized");
+      return res.redirect("/routines");
+    }
+    // Actualiza la nota si el usuario tiene permiso y el documento existe
     await Routine.findByIdAndUpdate(req.params.id, {title, description, date, time});
-    req.flash('success_msg', 'Routine updated successfully');
+    req.flash("success_msg", "Routine updated successfully");
     res.redirect('/routines');
+  } catch (error) {
+    console.log(error);
+    req.flash("error_msg", "Something went wrong");
+    res.redirect('/routines');
+  }
 }
 
 routinesCtrl.deleteRoutine = async (req, res) => {

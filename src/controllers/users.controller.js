@@ -1,7 +1,6 @@
 const usersCtrl = {};
 const passport = require("passport");
 const User = require("../models/User");
-const { request } = require("../server");
 
 usersCtrl.renderSignUpForm = (req, res) => {
   res.render("users/signup");
