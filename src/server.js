@@ -1,5 +1,4 @@
 const express = require("express");
-require('dotenv').config();
 const {connectDB} = require("./database");
 const http = require("http");
 const path = require("path");
@@ -13,8 +12,6 @@ const session = require("express-session");
 const passport = require("passport");
 const formatDateHelper = require("./helpers/formatDate");
 
-// Llamado del módulo dotenv para la ejecución de variables de entorno
-require("dotenv").config();
 connectDB();
 const webpush = require("./webpush"); // Importamos el módulo webpush
 
@@ -68,18 +65,6 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.user = req.user || null;
   next();
-});
-
-// Endpoint para manejar las suscripciones a las notificaciones
-app.post("/subscribe", (req, res) => {
-  const subscription = req.body; // La suscripción del cliente llega en el body
-  res.status(201).json({}); // Respondemos con un código 201 (Created)
-
-  // Lógica para almacenar la suscripción en la base de datos o en memoria
-  // Esto puede variar según tu caso de uso, podría ser almacenado en MongoDB
-
-  // Por ahora, solo loguearemos la suscripción
-  console.log("New subscription:", subscription);
 });
 
 // Routes
